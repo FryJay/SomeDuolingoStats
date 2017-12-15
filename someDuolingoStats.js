@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Some Duolingo Stats
-// @version      0.1
+// @version      0.1.1
 // @description  Shows some stats on Duolingo
 // @match        http://www.duolingo.com/*
 // @match        https://www.duolingo.com/*
@@ -30,7 +30,7 @@ for (var course in courseList) {
         for (var currentLevel in currentSkillLevel) {
             var currentSkills = currentSkillLevel[currentLevel];
 
-            totalSkills = totalSkills + currentLevel.length;
+            totalSkills = totalSkills + currentSkills.length;
 
             for (var currentSkill in currentSkills) {
                 skillCodes.push(currentSkills[currentSkill]);
@@ -76,7 +76,7 @@ for (var course in courseList) {
 
         // Trees
         var maxTrees = currentCourse.trackingProperties.max_tree_level;
-        var totalTrees = currentSkillLevel.length;
+        var totalTrees = currentSkillLevel.length + 1;
 
         var insertString = "<div class='someDuoStats'><br><table>";
 
