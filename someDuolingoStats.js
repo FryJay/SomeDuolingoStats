@@ -20,7 +20,7 @@ var levelsXPRequired = DuoState.config.xpLevelCutoffs;
 
 for (var course in courseList) {
     var currentCourse = courseList[course];
-    if (currentCourse.wordsLearned > 0 && currentCourse.id == DuoState.user.courseId) {
+    if (currentCourse.id == DuoState.user.courseId) {
         var currentSkillLevel = currentCourse.skills;
 
         var totalSkills = 0;
@@ -83,7 +83,8 @@ for (var course in courseList) {
         insertString = insertString + printProgress("Total XP", currentCourse.xp, nextLevelXP);
         insertString = insertString + printProgress("Curr XP", expForCurrentLevel, totalExpForCurrentLevel);
 
-        insertString = insertString + printProgress("Weak", weakWords, currentCourse.wordsLearned);
+	if(currentCourse.wordsLearned > 0)
+		insertString = insertString + printProgress("Weak", weakWords, currentCourse.wordsLearned);
 
         insertString = insertString + printProgress("Trees", maxTrees, totalTrees);
 
