@@ -37,23 +37,26 @@ for (var course in courseList) {
             }
         }
 
-        var totalLessons = 0;
-        var completedLessons = 0;
-        var skillsCompleted = 0;
+        var totalLevels = 0;
+        var completedLevels = 0;
 
-        var weakWords = 0;
+        var skillsCompleted = 0;
 
         for (var currentSkill in skillCodes) {
             let skillData = allSkills[skillCodes[currentSkill]];
-            totalLessons = totalLessons + skillData.lessons;
-            completedLessons = completedLessons + skillData.finishedLessons;
+
+            if (skillData.levels) {
+                totalLevels = totalLevels + skillData.levels;
+            }
+
+            if (skillData.finishedLevels) {
+                completedLevels = completedLevels + skillData.finishedLevels;
+            }
+
             if (skillData.lessons == skillData.finishedLessons) {
                 skillsCompleted = skillsCompleted + 1;
             }
 
-            if (skillData.weakWords) {
-                weakWords = weakWords + skillData.weakWords.length;
-            }
         }
 
         // Calculate the XP for the next level.
@@ -76,7 +79,7 @@ for (var course in courseList) {
 
         // Trees
         var maxTrees = currentCourse.trackingProperties.max_tree_level;
-        var totalTrees = currentSkillLevel.length + 1;
+        var totalTrees = currentSkillLevel.length;
 
         var insertString = "<div class='someDuoStats'><br><table>";
 
@@ -84,16 +87,13 @@ for (var course in courseList) {
         insertString = insertString + printProgress("Curr XP", expForCurrentLevel, totalExpForCurrentLevel);
 
 	if(currentCourse.wordsLearned > 0)
-		insertString = insertString + printProgress("Weak", weakWords, currentCourse.wordsLearned);
-
-        insertString = insertString + printProgress("Trees", maxTrees, totalTrees);
+		insertString = insertString + printProgress("Trees", maxTrees, totalTrees);
 
         // Skills
         insertString = insertString + printProgress("Skills", skillsCompleted, totalSkills);
-        insertString = insertString + printProgress("Gold", currentCourse.trackingProperties.gold_skill_count, skillsCompleted);
 
-        // Lessons
-        insertString = insertString + printProgress("Lessons", completedLessons, totalLessons);
+        // Crowns
+        insertString = insertString + printProgress("Crowns", completedLevels, totalLevels);
 
         insertString = insertString + "</table></div>";
         $(insertString).insertAfter("._3qiOl");
